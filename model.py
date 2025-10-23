@@ -1,14 +1,17 @@
-# do it for the first time only for A4 developments 
-# init venv
+from sklearn.decomposition import PCA
+from utils import read_imgs
 
-def read_imgs(folder_path: str) -> list[list]:
-    pass
-
-folder_path = "./some_path"
+folder_path = "./A4"
 data = read_imgs(folder_path)
 
-# normalize imgs somehow: e.g. rgb -> to black shades (by calculating mean of color e.g. (r+g+b)/3 -> so instead of list [r,g,b]->one value;
-# and then make this value related e.g. x/255)?
+print(data.describe)
+
+pca = PCA(svd_solver="full").fit(data)
+print(pca.components_.shape, pca.explained_variance_.shape)
+
+reduced_data = pca.transform(data)
+print(reduced_data, pca.explained_variance_ratio_)
+
 
 # create PCA model by sklearn
 # take components enough to explain 0.90? (I should think about the border number)
