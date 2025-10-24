@@ -12,18 +12,28 @@ def normalize_bgr_img(img):
     return gray_img_norm
 
 
-def read_imgs(folder_path):
+def read_normalize_img(folder_path, filename):
+    img_path = os.path.join(folder_path, filename)
+    img = cv2.imread(str(img_path))
+
+    if img is None:
+        raise Exception("img is None")
+
+    norm_img = normalize_bgr_img(img)
+    flat_img = norm_img.flatten()
+    return flat_img
+
+
+def read_normalize_imgs(folder_path):
     pixels_list = []
+    titles_list = []
 
     for filename in os.listdir(folder_path):
         if filename.endswith(('.png', '.jpg', '.jpeg')):  # Filter for image files
-            img_path = os.path.join(folder_path, filename)
-            img = cv2.imread(str(img_path))  # Read the image
+            flat_img = read_normalize_img(folder_path, filename)
+            pixels_list.append(flat_img)
+            titles_list.append(filename)
 
-            if img is not None:
-                norm_img = normalize_bgr_img(img)
-                flat_img = norm_img.flatten()  # Flatten the image to a 1D array
-                pixels_list.append(flat_img)
     pixels_arr = np.array(pixels_list, dtype="object")
     df = pd.DataFrame(pixels_arr)
-    return df
+    return df, titles_list
