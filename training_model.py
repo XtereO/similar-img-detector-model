@@ -1,11 +1,9 @@
+import json
+
 from sklearn.decomposition import PCA
+
 from utils import read_normalize_imgs, read_normalize_img
-
-# function which will find the similar img
-
-
-def img_match(normalized_img):
-    pass
+from predicting_model import predict_match_img, distances
 
 
 if __name__ == "__main__":
@@ -27,30 +25,24 @@ if __name__ == "__main__":
     components = pca.components_[:n]
     avg_data = data.mean()
     reduced_data = (data - avg_data) @ components.transpose()
+    reduced_data.insert(0, 'title', titles)
 
     print(
         f"explained_variance {explained_variance},\ncomponents {components.shape} {components},\nreduced data {reduced_data.shape} {reduced_data}")
 
-    # this code should be done as a function so I can use it in backend (arg: img file itself; take other args by once read config with model params at the start of server)
     test_img = read_normalize_img("./", "./squirrel.png")
-    reduced_test_img = (test_img-avg_data) @ components.transpose()
-    min_err, index = float("Inf"), -1
-    rows, cols = reduced_data.shape
-    for i in range(rows):
-        err = 0
-        for j in range(cols):
-            # actually here can be any loss function (e.g. std, mae, ...) - we just want to find min value for this err - it can be as arg in function (loss function)
-            err += (reduced_data.iloc[i, j] - reduced_test_img[j])**2
-        if min_err > err:
-            min_err = err
-            index = i
-        print(err, titles[i])
-    print(f"the best match: {titles[index]}, {min_err}")
+    predict_match_img(test_img, components, avg_data,
+                      reduced_data, distances["euclid"])
 
-
-# in algo we should first transform img: normalize, extract A rows, use F (F*(Y-A) = U); then use kNN (k=1; metric choice the best appropriate or just Euclid)
-
-# I should export it in some file: avg, components, transformed data
+    # saving model params and reduced_data
+    with open('model_params.json', 'w') as f:
+        model_params = {
+            "components": list(map(lambda c: list(c), components)),
+            "avg_data": list(avg_data)
+        }
+        json.dump(model_params, f)
+    reduced_data.to_csv('reduced_data.csv', index=False,
+                        header=True, na_rep='N/A', sep=',')
 
 # then do mini-fastapi for this (uploading img to find the most similar in some database)
 
@@ -58,4 +50,5 @@ if __name__ == "__main__":
 # if I have enough wish then I can create also logger to understand how my function calculates
 
 # this algo can be improved if developers will make kind of additional standartization about placing detail on the blueprint (make only one position and exactly coordinates + defining the same view for all details) - add it to Readme in Improvement section (or if we extract exactly detail and its param info first, then my algo with reducing)
-# to improve we can actually hire engineer that can say what is the most "similar" imgs so we can setup feedback for our model (+understand what is the best lost function)
+# to improve we can actually hire an engineer that can say what is the most "similar" imgs so we can setup feedback for our model (+understand what is the best lost function)
+# after creating a server and all functions - do refactoring
