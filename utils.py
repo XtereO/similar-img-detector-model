@@ -8,8 +8,9 @@ def normalize_bgr_img(img):
     '''Normalize img: make it gray and put pixels to value [0,1]'''
     gray_img = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
     gray_img_norm = gray_img.astype('float32') / 255.0
+    flat_img = gray_img_norm.flatten()
 
-    return gray_img_norm
+    return flat_img
 
 
 def read_normalize_img(folder_path, filename):
@@ -20,8 +21,7 @@ def read_normalize_img(folder_path, filename):
         raise Exception("img is None")
 
     norm_img = normalize_bgr_img(img)
-    flat_img = norm_img.flatten()
-    return flat_img
+    return norm_img
 
 
 def read_normalize_imgs(folder_path):

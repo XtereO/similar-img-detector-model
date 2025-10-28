@@ -1,4 +1,4 @@
-import pandas as pd
+import numpy as np
 
 
 def minkov_distance(p1, p2, dim, k):
@@ -16,7 +16,8 @@ distances = {
 
 
 def predict_match_img(normalized_img, components, avg_data, reduced_data, dist_func):
-    reduced_img = (normalized_img-avg_data) @ components.transpose()
+    reduced_img = (normalized_img-np.array(avg_data)
+                   ) @ np.array(components).transpose()
     min_dist, index = float("Inf"), -1
     X = reduced_data.drop("title", axis=1)
     y = reduced_data["title"]
