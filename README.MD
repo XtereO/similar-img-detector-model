@@ -35,7 +35,7 @@ Among all existing images we pick the one image that has min distance with uploa
 
 So if $X$ is a set of normalized images and $y$ is an uploaded image: 
 
-$ \text{matched\_img} = \underset{x \in X}{\arg} \quad \underset{x \in X}{\min} \quad d(x, y) $
+$ \text{matched\_img} = \underset{x \in X}{\text{arg}} \quad \underset{x \in X}{\text{min}} \quad d(x, y) $
 
 ## Possible improvements
 
