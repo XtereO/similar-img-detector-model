@@ -33,9 +33,9 @@ We calculate distance between normalized existing and uploaded images.
 The distance is a symmetric always-non-negative function (In our project we only use Minkowski distances).
 Among all existing images we pick the one image that has min distance with uploaded one.
 
-So if $X$ is a set of normalized images and $y$ is an uploaded image: 
+So if $X$ is a set of normalized images, $y$ is an uploaded image and $m$ is a matched image: 
 
-$ \text{matched\_img} = \underset{x \in X}{\text{arg}} \quad \underset{x \in X}{\text{min}} \quad d(x, y) $
+$ m = \underset{x \in X}{\text{arg}} \quad \underset{x \in X}{\text{min}} \quad d(x, y) $
 
 ## Possible improvements
 
