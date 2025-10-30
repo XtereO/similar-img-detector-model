@@ -37,7 +37,7 @@ So if $X$ is a set of normalized images, $y$ is an uploaded image and $m$ is a m
 
 $x \in X \quad Y$
 
-$\underset{x X}{mkn}$
+$\underset{x \in X}{mkn}$
 
 $ m = \underset{x X}{arg} \quad \underset{x  X}{min} \quad d(x, y) $
 
