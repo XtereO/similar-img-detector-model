@@ -30,11 +30,12 @@ if __name__ == "__main__":
     print(
         f"explained_variance {explained_variance},\ncomponents {components.shape} {components},\nreduced data {reduced_data.shape} {reduced_data}")
 
+    # testing model
     test_img = read_normalize_img("./", "./squirrel.png")
     predict_match_img(test_img, components, avg_data,
                       reduced_data, distances["euclid"])
 
-    # saving model params and reduced_data
+    # saving model params and reduced data
     with open('model_params.json', 'w') as f:
         model_params = {
             "components": list(map(lambda c: list(c), components)),
@@ -44,11 +45,8 @@ if __name__ == "__main__":
     reduced_data.to_csv('reduced_data.csv', index=False,
                         header=True, na_rep='N/A', sep=',')
 
-# then do mini-fastapi for this (uploading img to find the most similar in some database)
-
 # make a mini-doc with launching(server)/using(functions) this project with describing this algo (so we can improve it in future in case we want)
 # if I have enough wish then I can create also logger to understand how my function calculates
 
 # this algo can be improved if developers will make kind of additional standartization about placing detail on the blueprint (make only one position and exactly coordinates + defining the same view for all details) - add it to Readme in Improvement section (or if we extract exactly detail and its param info first, then my algo with reducing)
 # to improve we can actually hire an engineer that can say what is the most "similar" imgs so we can setup feedback for our model (+understand what is the best lost function)
-# after creating a server and all functions - do refactoring

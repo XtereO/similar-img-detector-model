@@ -17,7 +17,6 @@ with open("model_params.json", "r") as file:
     model_params = json.load(file)
 
 app = FastAPI()
-
 app.add_middleware(
     CORSMiddleware,
     allow_origins=["*"],
@@ -27,9 +26,9 @@ app.add_middleware(
 )
 
 
-@app.post("/upload/", tags=["Image Upload"])
+@app.post("/predict/", tags=["Match Model"])
 async def upload_file(file: UploadFile = File(...)):
-    """Upload an image file and process it."""
+    """Upload an image file and predict matched file in existing data."""
 
     contents = await file.read()
     np_arr = np.frombuffer(contents, np.uint8)
