@@ -39,7 +39,7 @@ $x \in X \quad Y$
 
 $\underset{x \in X}{mkn}$
 
-$ m = \underset{x X}{arg} \quad \underset{x  X}{min} \quad d(x, y) $
+$m = \underset{x \in X}{arg} \quad \underset{x \in X}{min} \quad d(x, y)$
 
 ## Possible improvements
 
