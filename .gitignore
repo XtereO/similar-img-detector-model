@@ -8,6 +8,9 @@ __pycache__/
 
 # Distribution / packaging
 model_params.json
+SimilarImgMatch.drawio
+*.drwaio.bkp
+*.bkp
 .Python
 venv/
 build/

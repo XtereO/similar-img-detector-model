@@ -5,7 +5,6 @@ import numpy as np
 import pandas as pd
 import cv2
 from fastapi.responses import JSONResponse
-from fastapi.openapi.models import APIKey
 from fastapi.middleware.cors import CORSMiddleware
 
 from utils import normalize_bgr_img
