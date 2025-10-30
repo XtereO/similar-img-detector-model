@@ -10,6 +10,7 @@ __pycache__/
 model_params.json
 SimilarImgMatch.drawio
 *.drwaio.bkp
+.$SimilarImgMatch.drawio.bkp
 *.bkp
 .Python
 venv/
