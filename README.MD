@@ -114,26 +114,36 @@ they return normalized img(s).
 """ 
 ```
 
-## Setup launching
+## Setup launching [19:34, November 10, 2025]
 
-First you should define a virtual environment (basic module venv of python is used), in the root directory of the project run these commands in your terminal to create and activate the virtual environment:
+To setup this project we need to install Docker on our device (Docker Desktop in case we use Windows): https://www.docker.com/products/docker-desktop/. 
 
-`python -m venv venv`
+![alt text](doc_imgs/docker_downloading.png)
 
-`.\venv\Scripts\activate`
+After installing launch Docker Desktop and sign in so we will be able to pull images. 
 
-After that run the following command to install required packages for this projects:
+First we're going to pull mongo image: `docker pull mongo`. 
 
-`pip install -r req.txt`
+Then create a container with the name "mongodb" (don't use another one because in other case we must change this name in docker-compose.yml file; modify only rootpassword - password that we'd like to use): `docker run -d --name mongodb -p 27017:27017 -e MONGO_INITDB_ROOT_USERNAME=root -e MONGO_INITDB_ROOT_PASSWORD=rootpassword mongo:latest`. To check if database with root user is created: `docker exec -it mongodb mongosh` or `docker run --rm -it --network yournetwork(usually localhost or mongodb) mongo mongosh --host mongodb -u root -p rootpassword --authenticationDatabase admin` (if root user isn't created then also in mongoshell: `use admin`, `db.createUser({    user: "root",    pwd: "rootpassword",    roles: [ { role: "root", db: "admin" } ]})`, `exit`, so we can also create other users if we'd like to use them instead of root in our project).
 
-After activating virtual environment (`.\venv\Scripts\activate`), we must run the following command to train our model by
-the files(developments/blueprints) in our folder A4:
+Once we've created  mongodb container with root user, then we should define our .env file in root directory. It should have following variables as in the code cell below (use our password that was defined previously, change the root username if we used another one when we were creating the user, the name of database can be any):
+```
+MONGO_INITDB_ROOT_USERNAME=root
+MONGO_INITDB_ROOT_PASSWORD=rootpassword
+MONGO_DATABASE=predicted_images_db
+```
 
-`python training_model.py`
+And now we can do the last command: `docker-compose up --build`. It will start setup our project by docker-compose.yml and Dockerfile. It will be done when we see the message from fastapi that App is started on our host. 
 
-It should print us `"model params and reduced data are saved."` in the terminal. If it does then we can launch our server:
+The result of working server:
+- predict match image to uploaded one:
+![alt text](doc_imgs/post_predict.png)
 
-`uvicorn server:app --host 0.0.0.0 --port 8000 --reload`
+- get all predicted images with their matches (pagination is included):
+![alt text](doc_imgs/get_predicted.png)
 
-The terminal should tell us when it's launched then we can go to `http://localhost:8000/docs` where we can test our model
-with our test images.
+### Warning
+
+Installation of Docker Desktop will also require to install Sub Linux system for Windows. And when we pull images and create containers it might take about 20Gb (I had 20Gb free on my disk C before making Docker things):
+
+![alt text](doc_imgs/diskCtrouble.png)

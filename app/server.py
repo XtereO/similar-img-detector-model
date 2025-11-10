@@ -1,8 +1,6 @@
 import json
 import shutil
 import os
-from urllib.parse import quote
-from dotenv import load_dotenv
 
 from fastapi import FastAPI, File, HTTPException, UploadFile
 import numpy as np
