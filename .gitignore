@@ -3,6 +3,9 @@ __pycache__/
 *.py[codz]
 *$py.class
 
+# Setup containers
+.env
+
 # C extensions
 *.so
 

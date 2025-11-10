@@ -8,12 +8,12 @@ WORKDIR /app
 COPY req.txt .
 RUN pip install --no-cache-dir -r req.txt
 
-# Copy the application code
+# Copy the app code and .env
 COPY . .
 
 # Expose port for FastAPI
 EXPOSE 8000
 
-# Command to run the application
+# Commands to run the app
 CMD ["python", "training_model.py"]
 CMD ["uvicorn", "server:app", "--host", "0.0.0.0", "--port", "8000", "--reload"]

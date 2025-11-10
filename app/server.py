@@ -1,5 +1,8 @@
 import json
 import shutil
+import os
+from urllib.parse import quote
+from dotenv import load_dotenv
 
 from fastapi import FastAPI, File, HTTPException, UploadFile
 import numpy as np
@@ -11,6 +14,12 @@ from fastapi.middleware.cors import CORSMiddleware
 
 from utils import normalize_bgr_img
 from predicting_model import predict_match_img, distances
+
+mongo_uri = os.getenv("MONGO_URI")
+mongo_database = os.getenv("MONGO_DB")
+client = MongoClient(mongo_uri)
+db = client[mongo_database]
+collection = db['predicted_images']
 
 reduced_data = pd.read_csv("reduced_data.csv")
 model_params = {}
@@ -26,12 +35,7 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-# MongoDB connection
-client = MongoClient("mongodb://mongodb:27017/")
-db = client['predicted_images_db']
-collection = db['predicted_images']
-
-@app.get("/predict/")
+@app.get("/predict/", tags=["Match Model"])
 async def get_predicted_files(page: int = 1, limit: int = 10):
     if page < 1:
         raise HTTPException(status_code=400, detail="Page must be greater than 0")
