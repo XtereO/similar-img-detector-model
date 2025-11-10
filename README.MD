@@ -133,7 +133,7 @@ the files(developments/blueprints) in our folder A4:
 
 It should print us `"model params and reduced data are saved."` in the terminal. If it does then we can launch our server:
 
-`uvicorn main:app --host 0.0.0.0 --port 8000 --reload`
+`uvicorn server:app --host 0.0.0.0 --port 8000 --reload`
 
 The terminal should tell us when it's launched then we can go to `http://localhost:8000/docs` where we can test our model
 with our test images.
