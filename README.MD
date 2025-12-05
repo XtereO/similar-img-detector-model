@@ -136,10 +136,10 @@ MONGO_DATABASE=predicted_images_db
 And now we can do the last command: `docker-compose up --build`. It will start setup our project by docker-compose.yml and Dockerfile. It will be done when we see the message from fastapi that App is started on our host. 
 
 The result of working server:
-- predict match image to uploaded one:
+- Predicting a matched image to an uploaded one:
 ![alt text](doc_imgs/post_predict.png)
 
-- get all predicted images with their matches (pagination is included):
+- Getting all predicted images with their matches (pagination is included):
 ![alt text](doc_imgs/get_predicted.png)
 
 ### Warning
