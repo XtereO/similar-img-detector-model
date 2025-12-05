@@ -22,10 +22,10 @@ so we can remove noises and focus on the most important information.
 | Step | Data type | Shape |
 | ---- | --------- | ----- |
 | Loading img | BGR [0-255, 0-255, 0-255] | (998, 1409) |
-| Convert to gray | gray 0-255 | (998, 1409) |
-| Scale img | gray 0-1 | (998, 1409) |
+| Converting to gray | gray 0-255 | (998, 1409) |
+| Scaling img | gray 0-1 | (998, 1409) |
 | Flatten img| gray 0-1 | (998 $\cdot$ 1409) |
-| Use PCA | float | n components |
+| Using PCA | float | n components |
 
 ### Calculating the most closed image
 
